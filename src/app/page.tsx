@@ -1,10 +1,10 @@
-import { Button } from "@nextui-org/react";
-import Image from "next/image";
+"use client";
+import { Counter } from "@/components/Counter";
 
 export default function Home() {
   return (
     <main className="">
-      <Button variant="bordered">Click Me</Button>
+      <Counter />
     </main>
   );
 }
