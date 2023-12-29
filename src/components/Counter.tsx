@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "@/features/counter/counterSlice";
+import { Button } from "@nextui-org/react";
 
 export function Counter() {
   const count = useSelector((state: any) => state.counter.value);
@@ -9,19 +10,21 @@ export function Counter() {
   return (
     <div>
       <div>
-        <button
+        <Button
+          variant="bordered"
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
         >
           Increment
-        </button>
+        </Button>
         <span>{count}</span>
-        <button
+        <Button
+          variant="flat"
           aria-label="Decrement value"
           onClick={() => dispatch(decrement())}
         >
           Decrement
-        </button>
+        </Button>
       </div>
     </div>
   );
