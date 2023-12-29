@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
+    "@prisma/client": "5.7.1",
     "@reduxjs/toolkit": "^2.0.1",
+    "@vercel/postgres": "^0.5.1",
     "framer-motion": "^10.16.16",
     "next": "14.0.4",
     "react": "^18",
