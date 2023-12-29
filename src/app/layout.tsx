@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextUIProviders, ReduxProvider } from "./providers";
+import SideNav from "@/components/SideNav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} h-screen flex flex-col justify-between`}
-      >
+      <body className={`${inter.className} h-screen flex`}>
         <ReduxProvider>
-          <NextUIProviders>{children}</NextUIProviders>
+          <NextUIProviders>
+            <main className="flex justify-between h-full w-full">
+              <SideNav />
+              {children}
+            </main>
+          </NextUIProviders>
         </ReduxProvider>
       </body>
     </html>
