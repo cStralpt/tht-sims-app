@@ -35,11 +35,7 @@ export default function ProductTable({ record }: TTableData) {
           <TableRow key={cell.id}>
             <TableCell className="text-center">{index + 1}</TableCell>
             <TableCell className="text-center">{cell.image}</TableCell>
-            <TableCell className="text-center">
-              {cell.categoryName === "alat_olahraga"
-                ? "Alat Olahraga"
-                : "Alat Musik"}
-            </TableCell>
+            <TableCell className="text-center">{cell.categoryName}</TableCell>
             <TableCell className="text-center">{cell.price}</TableCell>
             <TableCell className="text-center">{cell.sellingPrice}</TableCell>
             <TableCell className="text-center">{cell.stocks}</TableCell>

@@ -1,28 +1,30 @@
 "use client";
-import { Product, TTableData } from "@/type/table";
+import { Product } from "@/type/table";
 import { Button, Input } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
-
+import DropDown from "./DropDown";
+import { useProductState } from "@/hook/product/useProduct";
 export default function ProductList() {
-  const [getProduct, setProduct] = useState<Product[]>();
+  const { setProduct, getProduct } = useProductState();
 
-  useEffect(() => {
-    const getAllProducts = async () => {
-      try {
-        const fetchProduct = await fetch("http://localhost:3000/api/product");
+  const fetchAllProducts = async () => {
+    try {
+      const fetchProduct = await fetch("/api/product");
 
-        if (!fetchProduct.ok) {
-          throw new Error(`HTTP error! Status: ${fetchProduct.status}`);
-        }
-        const products: Product[] = await fetchProduct.json();
-        setProduct(products);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        throw error;
+      if (!fetchProduct.ok) {
+        throw new Error(`HTTP error! Status: ${fetchProduct.status}`);
       }
-    };
-    getAllProducts();
+      const products: Product[] = await fetchProduct.json();
+      setProduct(products);
+      console.log(getProduct.productList);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  };
+  useEffect(() => {
+    fetchAllProducts();
   }, []);
   return (
     <section className="flex grow flex-col gap-2 p-16">
@@ -35,7 +37,7 @@ export default function ProductList() {
             color="secondary"
             placeholder="Cari barang"
           />
-          <Button>Drop DOwn</Button>
+          <DropDown />
         </div>
         <div className="flex gap-2 items-center">
           <Button color="secondary">Export Excel</Button>
@@ -44,7 +46,7 @@ export default function ProductList() {
           </Button>
         </div>
       </div>
-      {getProduct !== undefined && <ProductTable record={getProduct} />}
+      {getProduct !== null && <ProductTable record={getProduct} />}
     </section>
   );
 }
