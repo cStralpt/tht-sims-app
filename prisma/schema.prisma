@@ -14,8 +14,31 @@ model User {
     id        String     @default(cuid()) @id
     name      String
     email     String @unique
+    password  String
+    avatar    String
     position String
     createdAt     DateTime  @default(now()) @map(name: "created_at")
     updatedAt     DateTime  @updatedAt @map(name: "updated_at")
     @@map(name: "users")
   }
+
+
+  model Product {
+  id            String     @default(cuid()) @id
+  name          String     @unique
+  category      Category   @relation(fields: [categoryName], references: [name])
+  categoryName  String
+  price         Int
+  sellingPrice  Int
+  stocks        Int
+  image         String
+  createdAt     DateTime   @default(now()) @map(name: "created_at")
+  updatedAt     DateTime   @updatedAt @map(name: "updated_at")
+}
+
+model Category {
+  id            String     @default(cuid()) @id
+  name          String     @unique
+  products      Product[]
+}
+

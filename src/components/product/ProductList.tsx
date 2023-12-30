@@ -1,24 +1,29 @@
-import { TTableData } from "@/type/table";
+"use client";
+import { Product, TTableData } from "@/type/table";
 import { Button, Input } from "@nextui-org/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
 
 export default function ProductList() {
-  const tableData: TTableData = {
-    field: [
-      "No",
-      "Image",
-      "Nama Produk",
-      "Harga Beli(Rp)",
-      "Harga Jual(Rp)",
-      "Stok Produk",
-      "Aksi",
-    ],
-    record: [
-      ["gambar", "Barang 1", 10000, 90000, 120],
-      ["gambar", "Barang 1", 10000, 90000, 120],
-    ],
-  };
+  const [getProduct, setProduct] = useState<Product[]>();
+
+  useEffect(() => {
+    const getAllProducts = async () => {
+      try {
+        const fetchProduct = await fetch("http://localhost:3000/api/product");
+
+        if (!fetchProduct.ok) {
+          throw new Error(`HTTP error! Status: ${fetchProduct.status}`);
+        }
+        const products: Product[] = await fetchProduct.json();
+        setProduct(products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        throw error;
+      }
+    };
+    getAllProducts();
+  }, []);
   return (
     <section className="flex grow flex-col gap-2 p-16">
       <strong className="text-2xl text-purple-800">Daftar Produk</strong>
@@ -39,7 +44,7 @@ export default function ProductList() {
           </Button>
         </div>
       </div>
-      <ProductTable field={tableData.field} record={tableData.record} />
+      {getProduct !== undefined && <ProductTable record={getProduct} />}
     </section>
   );
 }
