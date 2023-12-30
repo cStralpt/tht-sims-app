@@ -21,7 +21,7 @@ export default function ProductList() {
   };
   return (
     <section className="flex grow flex-col gap-2 p-16">
-      <h1 className="">Daftar Produk</h1>
+      <strong className="text-2xl text-purple-800">Daftar Produk</strong>
       <div className="w-full flex justify-between">
         <div className="flex gap-2 items-center">
           <Input
