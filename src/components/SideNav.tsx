@@ -36,7 +36,7 @@ export default function SideNav() {
       <nav className="flex flex-col gap-4">
         {[
           {
-            route: "/product",
+            route: "/product/productList",
             name: "Produk",
             icon: (
               <svg
