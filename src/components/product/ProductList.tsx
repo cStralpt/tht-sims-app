@@ -1,7 +1,7 @@
-import UITable from "@/components/Table";
 import { TTableData } from "@/type/table";
 import { Button, Input } from "@nextui-org/react";
 import React from "react";
+import ProductTable from "./ProductTable";
 
 export default function ProductList() {
   const tableData: TTableData = {
@@ -39,7 +39,7 @@ export default function ProductList() {
           </Button>
         </div>
       </div>
-      <UITable field={tableData.field} record={tableData.record} />
+      <ProductTable field={tableData.field} record={tableData.record} />
     </section>
   );
 }

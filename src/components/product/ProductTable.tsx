@@ -10,7 +10,7 @@ import {
   Button,
 } from "@nextui-org/react";
 
-export default function UITable({ field, record }: TTableData) {
+export default function ProductTable({ field, record }: TTableData) {
   return (
     <Table aria-label="product table" className="w-full">
       <TableHeader>
