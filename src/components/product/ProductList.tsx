@@ -1,14 +1,28 @@
 "use client";
 import { Product } from "@/type/table";
 import { Button, Input } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
 import DropDown from "./DropDown";
 import { useProductState } from "@/hook/product/useProduct";
 import fetchAllProducts from "@/lib/product/client/fetchAllProducts";
+import searchProductByNameOrCategoryName from "@/lib/product/client/searchProductByNameOrCategoryName";
 export default function ProductList() {
   const { setProduct, getProduct } = useProductState();
+  let debounceTimer: any;
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target?.value;
 
+    clearTimeout(debounceTimer);
+
+    debounceTimer = setTimeout(() => {
+      searchProductByNameOrCategoryName(searchValue, searchValue).then(
+        (searchedProduct) => {
+          setProduct(searchedProduct);
+        },
+      );
+    }, 300);
+  };
   useEffect(() => {
     fetchAllProducts()
       .then((product) => setProduct(product))
@@ -23,7 +37,9 @@ export default function ProductList() {
             type="text"
             variant="faded"
             color="secondary"
+            name="search"
             placeholder="Cari barang"
+            onChange={handleInputChange}
           />
           <DropDown />
         </div>
