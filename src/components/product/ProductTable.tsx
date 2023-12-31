@@ -20,6 +20,7 @@ export default function ProductTable({ record }: TTableData) {
   const field = [
     "No",
     "Image",
+    "Nama Produk",
     "Kategori Produk",
     "Harga Beli(Rp)",
     "Harga Jual(Rp)",
@@ -71,6 +72,7 @@ export default function ProductTable({ record }: TTableData) {
             <TableRow key={cell.id}>
               <TableCell className="text-center">{index + 1}</TableCell>
               <TableCell className="text-center">{cell.image}</TableCell>
+              <TableCell className="text-center">{cell.name}</TableCell>
               <TableCell className="text-center">{cell.categoryName}</TableCell>
               <TableCell className="text-center">{cell.price}</TableCell>
               <TableCell className="text-center">{cell.sellingPrice}</TableCell>
