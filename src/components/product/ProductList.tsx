@@ -7,6 +7,8 @@ import { useProductState } from "@/hook/product/useProduct";
 import fetchAllProducts from "@/lib/product/client/fetchAllProducts";
 import searchProductByNameOrCategoryName from "@/lib/product/client/searchProductByNameOrCategoryName";
 import { exportTableToExcel } from "@/lib/excel/exportTableToExcel";
+import Link from "next/link";
+
 export default function ProductList() {
   const { setProduct, getProduct } = useProductState();
   const [exportFunction, setExportFunction] = useState<Function>(() => {});
@@ -58,9 +60,11 @@ export default function ProductList() {
           >
             Export Excel
           </Button>
-          <Button color="secondary" variant="faded">
-            Tambah Produk
-          </Button>
+          <Link href="addProduct">
+            <Button color="secondary" variant="faded">
+              Tambah Produk
+            </Button>
+          </Link>
         </div>
       </div>
       {getProduct !== null && <ProductTable record={getProduct} />}
