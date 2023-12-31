@@ -5,26 +5,14 @@ import { useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
 import DropDown from "./DropDown";
 import { useProductState } from "@/hook/product/useProduct";
+import fetchAllProducts from "@/lib/product/client/fetchAllProducts";
 export default function ProductList() {
   const { setProduct, getProduct } = useProductState();
 
-  const fetchAllProducts = async () => {
-    try {
-      const fetchProduct = await fetch("/api/product");
-
-      if (!fetchProduct.ok) {
-        throw new Error(`HTTP error! Status: ${fetchProduct.status}`);
-      }
-      const products: Product[] = await fetchProduct.json();
-      setProduct(products);
-      console.log(getProduct.productList);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      throw error;
-    }
-  };
   useEffect(() => {
-    fetchAllProducts();
+    fetchAllProducts()
+      .then((product) => setProduct(product))
+      .catch((err) => console.log(err));
   }, []);
   return (
     <section className="flex grow flex-col gap-2 p-16">

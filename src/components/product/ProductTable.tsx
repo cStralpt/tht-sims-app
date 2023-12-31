@@ -1,4 +1,8 @@
 "use client";
+import { useProductState } from "@/hook/product/useProduct";
+import deleteProductById from "@/lib/product/client/deleteProductById";
+import fetchAllProducts from "@/lib/product/client/fetchAllProducts";
+import { fetchProductByCategory } from "@/lib/product/client/fetchProductByCategory";
 import { TTableData } from "@/type/table";
 import {
   Table,
@@ -9,6 +13,8 @@ import {
   TableCell,
   Button,
 } from "@nextui-org/react";
+import { useState } from "react";
+import ConfirmationModal from "./ConfirmationModal";
 
 export default function ProductTable({ record }: TTableData) {
   const field = [
@@ -21,62 +27,78 @@ export default function ProductTable({ record }: TTableData) {
     "Aksi",
   ];
   console.log({ record });
+  const { setProduct } = useProductState();
+  const [isModalShow, setIsModalShow] = useState(false);
+  const [willDeletedProduct, setWillDeletedProduct] = useState<string>("");
+  const DeleteionConfirmationModal = () => {
+    return (
+      <div className="fixed top-1/4 right-1/3 p-8 bg-default-200 rounded-2xl order-10">
+        <strong>kamu yakin ingin menghapus product ini?</strong>
+        <div className="flex gap-4 w-full mt-8">
+          <Button onClick={() => setIsModalShow(false)}>Batalkan</Button>
+          <Button
+            color="danger"
+            onClick={() => {
+              deleteProductById(willDeletedProduct).then((deletedProduct) => {
+                console.log(deletedProduct);
+                fetchAllProducts()
+                  .then((data) => {
+                    setProduct(data);
+                  })
+                  .catch((err) => console.log(err));
+              });
+            }}
+          >
+            Ya, aku yakin
+          </Button>
+        </div>
+      </div>
+    );
+  };
   return (
-    <Table aria-label="product table" className="w-full">
-      <TableHeader>
-        {field.map((item) => (
-          <TableColumn key={item} className="text-center">
-            {item}
-          </TableColumn>
-        ))}
-      </TableHeader>
-      <TableBody>
-        {record.map((cell, index) => (
-          <TableRow key={cell.id}>
-            <TableCell className="text-center">{index + 1}</TableCell>
-            <TableCell className="text-center">{cell.image}</TableCell>
-            <TableCell className="text-center">{cell.categoryName}</TableCell>
-            <TableCell className="text-center">{cell.price}</TableCell>
-            <TableCell className="text-center">{cell.sellingPrice}</TableCell>
-            <TableCell className="text-center">{cell.stocks}</TableCell>
-            <TableCell className="flex gap-2 justify-center">
-              <Button
-                variant="faded"
-                color="secondary"
-                onClick={() => {
-                  alert(cell.id);
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
+    <>
+      {isModalShow && <DeleteionConfirmationModal />}
+      <Table aria-label="product table" className="w-full">
+        <TableHeader>
+          {field.map((item) => (
+            <TableColumn key={item} className="text-center">
+              {item}
+            </TableColumn>
+          ))}
+        </TableHeader>
+        <TableBody className="-order-4">
+          {record.map((cell, index) => (
+            <TableRow key={cell.id}>
+              <TableCell className="text-center">{index + 1}</TableCell>
+              <TableCell className="text-center">{cell.image}</TableCell>
+              <TableCell className="text-center">{cell.categoryName}</TableCell>
+              <TableCell className="text-center">{cell.price}</TableCell>
+              <TableCell className="text-center">{cell.sellingPrice}</TableCell>
+              <TableCell className="text-center">{cell.stocks}</TableCell>
+              <TableCell className="flex gap-2 justify-center">
+                <Button
+                  variant="faded"
+                  color="secondary"
+                  onClick={() => {
+                    alert(cell.id);
+                  }}
                 >
-                  <path d="m18.988 2.012 3 3L19.701 7.3l-3-3zM8 16h3l7.287-7.287-3-3L8 13z"></path>
-                  <path d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z"></path>
-                </svg>
-              </Button>
-              <Button
-                variant="ghost"
-                color="secondary"
-                onClick={() => {
-                  alert(cell.id);
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z"></path>
-                </svg>
-              </Button>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="m18.988 2.012 3 3L19.701 7.3l-3-3zM8 16h3l7.287-7.287-3-3L8 13z"></path>
+                    <path d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z"></path>
+                  </svg>
+                </Button>
+                <ConfirmationModal productId={cell.id} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   );
 }
