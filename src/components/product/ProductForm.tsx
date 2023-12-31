@@ -61,7 +61,7 @@ export default function ProductForm({
           <Input
             type="number"
             variant="bordered"
-            defaultValue=""
+            defaultValue={defaultValues?.price}
             color="secondary"
             name="price"
             isRequired

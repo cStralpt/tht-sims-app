@@ -1,7 +1,5 @@
 "use client";
-import { Button, Input, Radio, RadioGroup, Spacer } from "@nextui-org/react";
 import Link from "next/link";
-import DropDown from "./DropDown";
 import ProductForm from "./ProductForm";
 
 export default function AddProduct() {

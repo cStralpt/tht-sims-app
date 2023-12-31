@@ -1,4 +1,5 @@
 import AddProduct from "@/components/product/AddProduct";
+import EditProduct from "@/components/product/EditProduct";
 import ProductList from "@/components/product/ProductList";
 
 export default function Product({
@@ -9,6 +10,7 @@ export default function Product({
   const productViewList = {
     productList: <ProductList />,
     addProduct: <AddProduct />,
+    editProduct: <EditProduct />,
   };
   return (
     <main className="grow">
