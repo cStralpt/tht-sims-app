@@ -1,12 +1,35 @@
+"use client";
 import PasswordInput from "@/components/PasswordInput";
 import { Button, Input } from "@nextui-org/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Signin() {
+  const [isLoginSuccess, setIsloaginSuccess] = useState(false);
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const sendUserData = await fetch("/api/auth/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: e.target.email.value,
+        password: e.target.password.value,
+      }),
+    });
+    const res = await sendUserData.json();
+    res.message === "success" && setIsloaginSuccess(true);
+    console.log({ res });
+  };
+  const { push } = useRouter();
+  isLoginSuccess && push("/");
   return (
     <section className="h-full w-full grid grid-cols-2">
       <form
         action=""
+        onSubmit={handleSubmit}
         className="h-full flex justify-center flex-col items-center gap-4"
       >
         <b className="flex gap-2 items-center font-semibold text-2xl">
@@ -25,10 +48,21 @@ export default function Signin() {
           Masuk atau buat akun untuk memulai
         </strong>
         <div className="flex gap-4 flex-col">
-          <Input type="email" variant="faded" label="Email" color="secondary" />
-          <PasswordInput />
+          <Input
+            type="email"
+            variant="faded"
+            name="email"
+            label="Email"
+            color="secondary"
+          />
+          <PasswordInput name="password" />
         </div>
-        <Button variant="flat" className="rounded-sm mt-4" color="secondary">
+        <Button
+          variant="flat"
+          className="rounded-sm mt-4"
+          color="secondary"
+          type="submit"
+        >
           Masuk
         </Button>
       </form>

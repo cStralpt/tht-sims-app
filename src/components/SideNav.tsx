@@ -1,9 +1,16 @@
 "use client";
+import { cookies } from "next/headers";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function SideNav() {
   const [isNavExpanded, setIsNavExpanded] = useState(true);
+  const router = useRouter();
+
+  const handleButtonClick = () => {
+    router.push("/api/auth/logout");
+  };
   return (
     <aside className="bg-purple-300 p-4">
       <header className="flex justify-between gap-8">
@@ -82,14 +89,26 @@ export default function SideNav() {
             ),
           },
         ].map((d) => (
-          <Link
-            href={d.route}
-            key={d.name}
-            className="p-4 text-purple-800 flex gap-2"
-          >
-            {d.icon}
-            {d.name}
-          </Link>
+          <>
+            {d.name != "Logout" ? (
+              <Link
+                href={d.route}
+                key={d.name}
+                className="p-4 text-purple-800 flex gap-2"
+              >
+                {d.icon}
+                {d.name}
+              </Link>
+            ) : (
+              <button
+                onClick={handleButtonClick}
+                className="p-4 text-purple-800 flex gap-2"
+              >
+                {d.icon}
+                {d.name}
+              </button>
+            )}
+          </>
         ))}
       </nav>
     </aside>

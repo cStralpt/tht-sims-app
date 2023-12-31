@@ -58,7 +58,7 @@ const EyeSlashFilledIcon = (props: any) => (
   </svg>
 );
 
-export default function PasswordInput() {
+export default function PasswordInput({ name }: { name: string }) {
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -68,6 +68,7 @@ export default function PasswordInput() {
       label="Password"
       variant="faded"
       color="secondary"
+      name={name}
       endContent={
         <button
           className="focus:outline-none"
