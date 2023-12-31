@@ -2,7 +2,6 @@
 import { useProductState } from "@/hook/product/useProduct";
 import deleteProductById from "@/lib/product/client/deleteProductById";
 import fetchAllProducts from "@/lib/product/client/fetchAllProducts";
-import { fetchProductByCategory } from "@/lib/product/client/fetchProductByCategory";
 import { TTableData } from "@/type/table";
 import {
   Table,

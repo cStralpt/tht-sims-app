@@ -1,14 +1,16 @@
 "use client";
-import { Product } from "@/type/table";
 import { Button, Input } from "@nextui-org/react";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
 import DropDown from "./DropDown";
 import { useProductState } from "@/hook/product/useProduct";
 import fetchAllProducts from "@/lib/product/client/fetchAllProducts";
 import searchProductByNameOrCategoryName from "@/lib/product/client/searchProductByNameOrCategoryName";
+import { exportTableToExcel } from "@/lib/excel/exportTableToExcel";
 export default function ProductList() {
   const { setProduct, getProduct } = useProductState();
+  const [exportFunction, setExportFunction] = useState<Function>(() => {});
+
   let debounceTimer: any;
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target?.value;
@@ -23,11 +25,15 @@ export default function ProductList() {
       );
     }, 300);
   };
+
   useEffect(() => {
-    fetchAllProducts()
-      .then((product) => setProduct(product))
-      .catch((err) => console.log(err));
+    fetchAllProducts().then((product) => {
+      setProduct(product);
+    });
   }, []);
+  useEffect(() => {
+    setExportFunction(() => () => exportTableToExcel(getProduct));
+  }, [getProduct !== null, getProduct]);
   return (
     <section className="flex grow flex-col gap-2 p-16">
       <strong className="text-2xl text-purple-800">Daftar Produk</strong>
@@ -44,7 +50,14 @@ export default function ProductList() {
           <DropDown />
         </div>
         <div className="flex gap-2 items-center">
-          <Button color="secondary">Export Excel</Button>
+          <Button
+            color="secondary"
+            onClick={() => {
+              exportFunction();
+            }}
+          >
+            Export Excel
+          </Button>
           <Button color="secondary" variant="faded">
             Tambah Produk
           </Button>
