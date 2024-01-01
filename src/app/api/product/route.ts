@@ -86,7 +86,16 @@ export async function DELETE(request: Request) {
     data: deletedProduct,
   });
 }
-
+const checkAcceptedFileType = (imgFile: File) => {
+  if (
+    UPLOADED_PRODUCT_IMAGE_TYPES[0] === imgFile.type ||
+    UPLOADED_PRODUCT_IMAGE_TYPES[1] === imgFile.type
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
 export async function PUT(request: Request) {
   const body = await request.formData();
   const { isUserAuthenticated } = useUserFromJwt();
@@ -114,10 +123,7 @@ export async function PUT(request: Request) {
       },
     );
   }
-  if (
-    UPLOADED_PRODUCT_IMAGE_TYPES[0] !== imgFile.type ||
-    UPLOADED_PRODUCT_IMAGE_TYPES[1] !== imgFile.type
-  ) {
+  if (checkAcceptedFileType(imgFile) === false) {
     return Response.json(
       {
         message: "wrong file type",
@@ -187,10 +193,7 @@ export async function PATCH(request: Request) {
       },
     );
   }
-  if (
-    UPLOADED_PRODUCT_IMAGE_TYPES[0] !== imgFile.type ||
-    UPLOADED_PRODUCT_IMAGE_TYPES[1] !== imgFile.type
-  ) {
+  if (checkAcceptedFileType(imgFile) === false) {
     return Response.json(
       {
         message: "wrong file type",
