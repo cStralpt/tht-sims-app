@@ -3,7 +3,7 @@ export function generateJwtAccessToken(userId: string, username: string) {
   const secretKey = process.env.JWT_SECRET;
   const payload = { sub: userId, userId, username: username };
   const token = jwt.sign(payload, "secretKey", {
-    expiresIn: "1h",
+    expiresIn: "48h",
   });
   return token;
 }
