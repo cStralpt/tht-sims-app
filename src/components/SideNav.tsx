@@ -96,7 +96,7 @@ export default function SideNav() {
                 className="p-4 text-purple-800 flex gap-2"
               >
                 {d.icon}
-                {d.name}
+                {isNavExpanded && d.name}
               </Link>
             ) : (
               <button
@@ -104,7 +104,7 @@ export default function SideNav() {
                 className="p-4 text-purple-800 flex gap-2"
               >
                 {d.icon}
-                {d.name}
+                {isNavExpanded && d.name}
               </button>
             )}
           </>
