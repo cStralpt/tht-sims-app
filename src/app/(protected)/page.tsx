@@ -6,7 +6,7 @@ export default function Home() {
       <div className="flex gap-8">
         <Link
           href="/product/productList"
-          className="p-4 text-purple-800 flex gap-2 text-3xl text-center font-bold flex-col items-center"
+          className="p-4 text-purple-800 flex gap-2 text-3xl text-center font-bold flex-col items-center hover:bg-purple-100 rounded-xl"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@ export default function Home() {
         </Link>
         <Link
           href="/profile"
-          className="p-4 text-purple-800 flex gap-2 text-3xl text-center font-bold flex-col items-center"
+          className="p-4 text-purple-800 flex gap-2 text-3xl text-center font-bold flex-col items-center hover:bg-purple-100 rounded-xl"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

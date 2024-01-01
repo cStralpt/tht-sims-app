@@ -12,7 +12,7 @@ export default function SideNav() {
   };
   return (
     <aside className="bg-purple-300 p-4">
-      <header className="flex justify-between gap-8">
+      <header className="flex justify-between gap-8 pb-16">
         {isNavExpanded && (
           <div className="flex items-center gap">
             <svg
@@ -93,7 +93,7 @@ export default function SideNav() {
               <Link
                 href={d.route}
                 key={d.name}
-                className="p-4 text-purple-800 flex gap-2"
+                className="p-4 text-purple-800 flex gap-2 hover:bg-purple-400/50 rounded-xl"
               >
                 {d.icon}
                 {isNavExpanded && d.name}
@@ -101,7 +101,7 @@ export default function SideNav() {
             ) : (
               <button
                 onClick={handleButtonClick}
-                className="p-4 text-purple-800 flex gap-2"
+                className="p-4 text-purple-800 flex gap-2 hover:bg-purple-400/50 rounded-xl"
               >
                 {d.icon}
                 {isNavExpanded && d.name}
