@@ -150,10 +150,11 @@ export async function PATCH(request: Request) {
   }
 
   const imgFile: File | null = body.get("productImg") as unknown as File;
-  const imageName = imgFile.name.split(".").shift() + "_tht";
+  let imageName = imgFile.name.split(".").shift() + "_tht";
   let newProduct;
   console.log(imageName);
   const fileType = imgFile.type.split("/")[1];
+  imageName = imageName + "." + fileType;
   try {
     newProduct = await prisma.product.update({
       where: {
