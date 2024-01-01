@@ -2,6 +2,7 @@
 import { useProductState } from "@/hook/product/useProduct";
 import deleteProductById from "@/lib/product/client/deleteProductById";
 import fetchAllProducts from "@/lib/product/client/fetchAllProducts";
+import Image from "next/image";
 import { TTableData } from "@/type/table";
 import {
   Table,
@@ -71,7 +72,17 @@ export default function ProductTable({ record }: TTableData) {
           {record.map((cell, index) => (
             <TableRow key={cell.id}>
               <TableCell className="text-center">{index + 1}</TableCell>
-              <TableCell className="text-center">{cell.image}</TableCell>
+              <TableCell className="text-center">
+                {cell.image !== undefined && (
+                  <Image
+                    src={`/product/${cell.image}`}
+                    alt="product image"
+                    width={50}
+                    height={50}
+                    className="aspect-auto"
+                  />
+                )}
+              </TableCell>
               <TableCell className="text-center">{cell.name}</TableCell>
               <TableCell className="text-center">{cell.categoryName}</TableCell>
               <TableCell className="text-center">{cell.price}</TableCell>

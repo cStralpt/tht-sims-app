@@ -7,6 +7,6 @@ export default async function convertBufferIntoFile(
 ) {
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
-  const filePath = `./public/${fileName}.${fileType}`;
+  const filePath = `./public/product/${fileName}.${fileType}`;
   await fs.writeFile(filePath, buffer);
 }

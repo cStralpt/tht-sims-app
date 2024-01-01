@@ -54,10 +54,11 @@ export async function DELETE(request: Request) {
 export async function PUT(request: Request) {
   const body = await request.formData();
   const imgFile: File | null = body.get("productImg") as unknown as File;
-  const imageName = imgFile.name.split(".").shift() + "_tht";
   let newProduct;
-  console.log(imageName);
+  let imageName = imgFile.name.split(".").shift() + "_tht";
   const fileType = imgFile.type.split("/")[1];
+  imageName = imageName + "." + fileType;
+  console.log(imageName);
   try {
     newProduct = await prisma.product.create({
       data: {
