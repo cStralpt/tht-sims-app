@@ -1,5 +1,6 @@
 import { Spacer, RadioGroup, Radio, Input, Button } from "@nextui-org/react";
-import React, { FormEventHandler } from "react";
+import React, { FormEventHandler, useEffect, useState } from "react";
+import DropdownCategory from "@/components/product/DropdownMenu";
 
 export default function ProductForm({
   handleSubmit,
@@ -30,16 +31,7 @@ export default function ProductForm({
       <div className="flex gap-4">
         <div className="w-1/4">
           <Spacer x={9} />
-          <RadioGroup
-            label="Milih kategori"
-            color="secondary"
-            name="category"
-            defaultValue={defaultValues.category}
-            isRequired
-          >
-            <Radio value="Alat Musik">Alat Musik</Radio>
-            <Radio value="Alat Olahraga">Alat Olahraga</Radio>
-          </RadioGroup>
+          <DropdownCategory />
         </div>
         <div className="w-full">
           <Spacer x={9} />

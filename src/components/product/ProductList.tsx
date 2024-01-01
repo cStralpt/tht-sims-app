@@ -2,7 +2,7 @@
 import { Button, Input, Pagination, Spinner } from "@nextui-org/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
-import DropDown from "./DropDown";
+import DropdownCategory from "@/components/product/DropdownMenu";
 import { useProductState } from "@/hook/product/useProduct";
 import fetchAllProducts from "@/lib/product/client/fetchAllProducts";
 import searchProductByNameOrCategoryName from "@/lib/product/client/searchProductByNameOrCategoryName";
@@ -55,7 +55,7 @@ export default function ProductList() {
             placeholder="Cari barang"
             onChange={handleInputChange}
           />
-          <DropDown />
+          <DropdownCategory isOnProductList={true} />
         </div>
         <div className="flex gap-2 items-center">
           <Button
