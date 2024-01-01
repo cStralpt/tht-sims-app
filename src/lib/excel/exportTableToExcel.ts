@@ -4,7 +4,6 @@ import * as XLSX from "xlsx";
 export const exportTableToExcel = (products: any) => {
   const headerRow = [
     "No",
-    "Image",
     "Nama Produk",
     "Kategori Produk",
     "Harga Beli(Rp)",
@@ -13,7 +12,6 @@ export const exportTableToExcel = (products: any) => {
   ];
   const tableData = products.map((item: Product, index: number) => [
     index + 1,
-    item.image,
     item.name,
     item.categoryName,
     item.price,
