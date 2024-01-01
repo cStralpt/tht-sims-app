@@ -1,3 +1,4 @@
+import useUserFromJwt from "@/hook/user/useUserFromJwt";
 import prisma from "@/lib/prisma";
 import { getAllProducts } from "@/lib/product/getAllProduct";
 import getProductByategoryName from "@/lib/product/getProductByCategoryName";
@@ -6,6 +7,17 @@ import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   const pagination = request.nextUrl.searchParams;
+
+  const { isUserAuthenticated } = useUserFromJwt();
+  if (isUserAuthenticated === undefined) {
+    return Response.json(
+      { message: "unauthorized" },
+      {
+        status: 401,
+      },
+    );
+  }
+
   const totalRecord = await prisma.product.count();
   const take = parseInt(pagination.get("take") as string);
   const skip = parseInt(pagination.get("skip") as string);
@@ -21,6 +33,17 @@ export async function GET(request: NextRequest) {
 }
 export async function POST(request: Request) {
   const body = await request.json();
+
+  const { isUserAuthenticated } = useUserFromJwt();
+  if (isUserAuthenticated === undefined) {
+    return Response.json(
+      { message: "unauthorized" },
+      {
+        status: 401,
+      },
+    );
+  }
+
   console.log({ body: body });
   const products = await getProductByategoryName(body.categoryName);
   return Response.json(products);
@@ -28,6 +51,15 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   const body = await request.json();
+  const { isUserAuthenticated } = useUserFromJwt();
+  if (isUserAuthenticated === undefined) {
+    return Response.json(
+      { message: "unauthorized" },
+      {
+        status: 401,
+      },
+    );
+  }
   const isProductExist = await prisma.product.findUnique({
     where: { id: body.id },
   });
@@ -53,6 +85,15 @@ export async function DELETE(request: Request) {
 
 export async function PUT(request: Request) {
   const body = await request.formData();
+  const { isUserAuthenticated } = useUserFromJwt();
+  if (isUserAuthenticated === undefined) {
+    return Response.json(
+      { message: "unauthorized" },
+      {
+        status: 401,
+      },
+    );
+  }
   const imgFile: File | null = body.get("productImg") as unknown as File;
   let newProduct;
   let imageName = imgFile.name.split(".").shift() + "_tht";
@@ -97,6 +138,17 @@ export async function PUT(request: Request) {
 
 export async function PATCH(request: Request) {
   const body = await request.formData();
+
+  const { isUserAuthenticated } = useUserFromJwt();
+  if (isUserAuthenticated === undefined) {
+    return Response.json(
+      { message: "unauthorized" },
+      {
+        status: 401,
+      },
+    );
+  }
+
   const imgFile: File | null = body.get("productImg") as unknown as File;
   const imageName = imgFile.name.split(".").shift() + "_tht";
   let newProduct;
