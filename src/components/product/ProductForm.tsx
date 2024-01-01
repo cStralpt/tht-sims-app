@@ -113,7 +113,7 @@ export default function ProductForm({
         </div>
       </div>
       <div className="flex gap-2 items-center ml-auto">
-        <Button color="secondary" variant="faded">
+        <Button color="secondary" variant="faded" type="reset">
           Batalkan
         </Button>
         <Button color="secondary" type="submit">
