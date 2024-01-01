@@ -1,5 +1,5 @@
 "use client";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Pagination } from "@nextui-org/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
 import DropDown from "./DropDown";
@@ -12,6 +12,7 @@ import Link from "next/link";
 export default function ProductList() {
   const { setProduct, getProduct } = useProductState();
   const [exportFunction, setExportFunction] = useState<Function>(() => {});
+  const [productPageSize, setProductPageSize] = useState<number>(1);
 
   let debounceTimer: any;
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,8 +30,13 @@ export default function ProductList() {
   };
 
   useEffect(() => {
-    fetchAllProducts().then((product) => {
-      setProduct(product);
+    fetchAllProducts(7, 0).then((product) => {
+      setProduct(product.data);
+      let totalPage = (product.length - (product.length % 7)) / 7;
+      if (product.length % 7 !== 0) {
+        totalPage = totalPage + 1;
+      }
+      setProductPageSize(totalPage);
     });
   }, []);
   useEffect(() => {
@@ -68,6 +74,21 @@ export default function ProductList() {
         </div>
       </div>
       {getProduct !== null && <ProductTable record={getProduct} />}
+      <div className="w-full flex p-4">
+        <Pagination
+          total={productPageSize}
+          initialPage={1}
+          onChange={(page) => {
+            fetchAllProducts(7, (page - 1) * 7).then((product) => {
+              setProduct(product.data);
+            });
+          }}
+          color="secondary"
+          className="ml-auto"
+          showControls
+          variant="bordered"
+        />
+      </div>
     </section>
   );
 }

@@ -2,10 +2,22 @@ import prisma from "@/lib/prisma";
 import { getAllProducts } from "@/lib/product/getAllProduct";
 import getProductByategoryName from "@/lib/product/getProductByCategoryName";
 import convertBufferIntoFile from "@/lib/system/convertBufferIntoFile";
+import { NextRequest } from "next/server";
 
-export async function GET(request: Request) {
-  const products = await getAllProducts();
-  return Response.json(products);
+export async function GET(request: NextRequest) {
+  const pagination = request.nextUrl.searchParams;
+  const totalRecord = await prisma.product.count();
+  const take = parseInt(pagination.get("take") as string);
+  const skip = parseInt(pagination.get("skip") as string);
+  if (take !== null && skip !== null) {
+    console.log({ pagination: { take, skip } });
+    const products = await getAllProducts(take, skip);
+    return Response.json({
+      message: "success",
+      data: products,
+      length: totalRecord,
+    });
+  }
 }
 export async function POST(request: Request) {
   const body = await request.json();
