@@ -55,9 +55,9 @@ export default function ConfirmationModal({
                   onClick={() => {
                     deleteProductById(productId).then((deletedProduct) => {
                       console.log(deletedProduct);
-                      fetchAllProducts()
-                        .then((data) => {
-                          setProduct(data);
+                      fetchAllProducts(7, 0)
+                        .then((product) => {
+                          setProduct(product.data);
                         })
                         .catch((err) => console.log(err));
                     });
