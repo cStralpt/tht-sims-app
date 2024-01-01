@@ -16,6 +16,7 @@ import {
 import { useState } from "react";
 import ConfirmationModal from "./ConfirmationModal";
 import Link from "next/link";
+import formatNumberIntoIdr from "@/lib/product/formatNumberIntoIdr";
 
 export default function ProductTable({ record }: TTableData) {
   const field = [
@@ -85,8 +86,12 @@ export default function ProductTable({ record }: TTableData) {
               </TableCell>
               <TableCell className="text-center">{cell.name}</TableCell>
               <TableCell className="text-center">{cell.categoryName}</TableCell>
-              <TableCell className="text-center">{cell.price}</TableCell>
-              <TableCell className="text-center">{cell.sellingPrice}</TableCell>
+              <TableCell className="text-center">
+                {formatNumberIntoIdr(cell.price)}
+              </TableCell>
+              <TableCell className="text-center">
+                {formatNumberIntoIdr(cell.sellingPrice)}
+              </TableCell>
               <TableCell className="text-center">{cell.stocks}</TableCell>
               <TableCell className="flex gap-2 justify-center">
                 <Link href={`/product/editProduct?productId=${cell.id}`}>

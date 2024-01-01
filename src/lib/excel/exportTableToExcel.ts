@@ -1,5 +1,6 @@
 import { Product } from "@prisma/client";
 import * as XLSX from "xlsx";
+import formatNumberIntoIdr from "../product/formatNumberIntoIdr";
 
 export const exportTableToExcel = (products: any) => {
   const headerRow = [
@@ -14,8 +15,8 @@ export const exportTableToExcel = (products: any) => {
     index + 1,
     item.name,
     item.categoryName,
-    item.price,
-    item.sellingPrice,
+    formatNumberIntoIdr(item.price),
+    formatNumberIntoIdr(item.sellingPrice),
     item.stocks,
   ]);
   const finalData = [headerRow, ...tableData];
