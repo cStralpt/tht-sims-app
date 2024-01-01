@@ -1,3 +1,7 @@
+import {
+  UPLOADED_PRODUCT_IMAGE_SIZE,
+  UPLOADED_PRODUCT_IMAGE_TYPES,
+} from "@/constants";
 import useUserFromJwt from "@/hook/user/useUserFromJwt";
 import prisma from "@/lib/prisma";
 import { getAllProducts } from "@/lib/product/getAllProduct";
@@ -99,7 +103,30 @@ export async function PUT(request: Request) {
   let imageName = imgFile.name.split(".").shift() + "_tht";
   const fileType = imgFile.type.split("/")[1];
   imageName = imageName + "." + fileType;
-  console.log(imageName);
+  console.log({ imgFile });
+  if (imgFile.size > UPLOADED_PRODUCT_IMAGE_SIZE) {
+    return Response.json(
+      {
+        message: "maximum file size is 100KB",
+      },
+      {
+        status: 413,
+      },
+    );
+  }
+  if (
+    UPLOADED_PRODUCT_IMAGE_TYPES[0] !== imgFile.type ||
+    UPLOADED_PRODUCT_IMAGE_TYPES[1] !== imgFile.type
+  ) {
+    return Response.json(
+      {
+        message: "wrong file type",
+      },
+      {
+        status: 415,
+      },
+    );
+  }
   try {
     newProduct = await prisma.product.create({
       data: {
@@ -150,6 +177,29 @@ export async function PATCH(request: Request) {
   }
 
   const imgFile: File | null = body.get("productImg") as unknown as File;
+  if (imgFile.size > UPLOADED_PRODUCT_IMAGE_SIZE) {
+    return Response.json(
+      {
+        message: "maximum file size is 100KB",
+      },
+      {
+        status: 413,
+      },
+    );
+  }
+  if (
+    UPLOADED_PRODUCT_IMAGE_TYPES[0] !== imgFile.type ||
+    UPLOADED_PRODUCT_IMAGE_TYPES[1] !== imgFile.type
+  ) {
+    return Response.json(
+      {
+        message: "wrong file type",
+      },
+      {
+        status: 415,
+      },
+    );
+  }
   let imageName = imgFile.name.split(".").shift() + "_tht";
   let newProduct;
   console.log(imageName);
