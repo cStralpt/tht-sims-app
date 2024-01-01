@@ -1,5 +1,5 @@
 "use client";
-import { Button, Input, Pagination } from "@nextui-org/react";
+import { Button, Input, Pagination, Spinner } from "@nextui-org/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
 import DropDown from "./DropDown";
@@ -73,7 +73,13 @@ export default function ProductList() {
           </Link>
         </div>
       </div>
-      {getProduct !== null && <ProductTable record={getProduct} />}
+      {getProduct !== null ? (
+        <ProductTable record={getProduct} />
+      ) : (
+        <div>
+          <Spinner size="md" label="Loading table....." />
+        </div>
+      )}
       <div className="w-full flex p-4">
         <Pagination
           total={productPageSize}
