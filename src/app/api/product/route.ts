@@ -109,9 +109,12 @@ export async function PUT(request: Request) {
   }
   const imgFile: File | null = body.get("productImg") as unknown as File;
   let newProduct;
-  let imageName = imgFile.name.split(".").shift() + "_tht";
+  let imageName =
+    imgFile.name.split(".").shift() +
+    "_tht" +
+    "." +
+    imgFile.name.split(".").pop();
   const fileType = imgFile.type.split("/")[1];
-  imageName = imageName + "." + fileType;
   console.log({ imgFile });
   if (imgFile.size > UPLOADED_PRODUCT_IMAGE_SIZE) {
     return Response.json(
@@ -203,11 +206,14 @@ export async function PATCH(request: Request) {
       },
     );
   }
-  let imageName = imgFile.name.split(".").shift() + "_tht";
+  let imageName =
+    imgFile.name.split(".").shift() +
+    "_tht" +
+    "." +
+    imgFile.name.split(".").pop();
   let newProduct;
   console.log(imageName);
   const fileType = imgFile.type.split("/")[1];
-  imageName = imageName + "." + fileType;
   try {
     newProduct = await prisma.product.update({
       where: {

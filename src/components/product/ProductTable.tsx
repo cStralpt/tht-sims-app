@@ -75,7 +75,7 @@ export default function ProductTable({ record }: TTableData) {
               <TableCell className="text-center">
                 {cell.image !== undefined && (
                   <Image
-                    src={`/product/${cell.image}.png`}
+                    src={`/product/${cell.image}`}
                     alt="product image"
                     width={50}
                     height={50}
