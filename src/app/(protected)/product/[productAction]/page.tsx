@@ -13,7 +13,7 @@ export default function Product({
     editProduct: <EditProduct />,
   };
   return (
-    <main className="grow">
+    <main className="grow overflow-hidden overflow-y-auto">
       {productViewList[params.productAction as keyof typeof productViewList]}
     </main>
   );
