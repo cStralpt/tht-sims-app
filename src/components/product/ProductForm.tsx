@@ -82,7 +82,7 @@ export default function ProductForm({
             htmlFor="product-img"
             className="w-full h-full p-16 border-2 border-dashed rounded-xl flex flex-col justify-center items-center cursor-pointer text-purple-950 text-2xl text-bold"
           >
-            {defaultValues.productImg === undefined ? (
+            {defaultValues.productImg === "" ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="300"
