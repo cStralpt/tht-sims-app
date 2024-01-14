@@ -68,7 +68,7 @@ export default function Signin() {
       </form>
       <div className="bg-purple-300 grid place-items-center">
         <Image
-          src="/assets/signin-img.png"
+          src="/assets/login-ilust.svg"
           alt="signin art"
           width={500}
           height={900}
